@@ -1,13 +1,18 @@
 import logo from './logo.webp'
 import hero from './hero.webp'
-
+import instagram from './instagram.png'
+import instagram_black from './instagram_black.png'
+import facebook from './facebook.webp'
+import facebook_black from './facebook_black.webp'
+import tiktok from './tiktok.webp'
+import tiktok_black from './tiktok_black.webp'
 import razor from './razor.webp'
 import clippers from './clippers.webp'
 import scissors from './scissors.webp'
 import products from './products.webp'
 import fazoniranje from './fazoniranje.webp'
 import hairfan from './hairfan.webp'
-
+import menu from './menu.png'
 
 import razor_black from './razor_black.webp'
 import clippers_black from './clippers_black.webp'
@@ -26,11 +31,17 @@ import barberchair from './barberchair.webp'
 
 
 export const assets = { 
+    facebook,
+    menu,
+    facebook_black,
+    tiktok,
+    tiktok_black,
     razor_black,
     products_black,
     barbertools_black,
     hairfan_black,
-    
+    instagram_black,
+    instagram,
     clippers_black,
     scissors_black,
     barberchair,

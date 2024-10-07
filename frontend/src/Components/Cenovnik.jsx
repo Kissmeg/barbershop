@@ -14,8 +14,8 @@ const Cenovnik = () => {
         </div>
         <p className='text-lg font-medium text-neutral-400 text-center p-4 '>Savršena kombinacija stila i pristupačnih cena – uživajte u modernim šišanjima, preciznom oblikovanju brade i vrhunskom feniranju, kako biste uvek izgledali i osećali se najbolje!</p>
 
-        <div className='flex justify-center gap-4'>
-          <div className='group shadow-xl rounded-md p-4 w-[20%] transition-all border-2 border-[#bc9355]'>
+        <div className='lg:flex justify-center gap-4'>
+          <div className='m-4 group shadow-xl rounded-md p-4 lg:w-[20%] transition-all border-2 border-[#bc9355]'>
                 <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Šišanje</p>
                 
                   <div className='flex justify-between pt-4'>
@@ -74,7 +74,7 @@ const Cenovnik = () => {
                   <hr className='border-dashed'/>
                   
           </div>
-          <div className='group shadow-xl rounded-md p-4 w-[20%] transition-all border-2 border-[#bc9355]'>
+          <div className='m-4 group shadow-xl rounded-md p-4 lg:w-[20%] transition-all border-2 border-[#bc9355]'>
                 <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Šišanje</p>
                 
                   <div className='flex justify-between pt-4'>
@@ -133,7 +133,7 @@ const Cenovnik = () => {
                   <hr className='border-dashed'/>
                   
             </div>
-            <div className='group shadow-xl rounded-md p-4 w-[20%] transition-all border-2 border-[#bc9355]'>
+            <div className='m-4 group shadow-xl rounded-md p-4 lg:w-[20%] transition-all border-2 border-[#bc9355]'>
                 <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Šišanje</p>
                 
                   <div className='flex justify-between pt-4'>

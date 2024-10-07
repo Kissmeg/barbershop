@@ -29,7 +29,7 @@ const Rad = () => {
   return (
     <div className='pt-20 mb-20 animated-section-left' id='rad'>
       <div className='text-4xl text-center'>
-        <p className='dancing-script-400 amber'>Galerija</p>
+        <p className='dancing-script-400 amber'>Moja jaja slajdraju</p>
           </div>
           <div className='text-5xl text-center header'>
               <p className='font-bold mb-4'>Mog rada</p>

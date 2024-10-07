@@ -5,15 +5,17 @@ import Usluga from '../Components/Usluga'
 import Cenovnik from '../Components/Cenovnik'
 import Frizure from '../Components/Frizure'
 import Rad from '../Components/Rad'
-import Location from '../Components/Location'
+
 import Salon from '../Components/Salon'
 import RadnoVreme from '../Components/RadnoVreme'
+import Stats from '../Components/Stats'
 
 const Home = () => {
   return (
     <div>
       <Hero/>
       <Salon/>
+      <Stats/>
       <Usluga/>
       <div className='flex justify-center'>
         <hr className='w-3/4 m-4'/>
@@ -21,7 +23,7 @@ const Home = () => {
       <Cenovnik/>
       <Rad />
       <RadnoVreme/>
-      <Location />
+      
 
     </div>
   )
