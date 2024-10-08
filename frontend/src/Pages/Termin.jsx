@@ -13,7 +13,7 @@ const Termin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://barbershop-backend-rex2.onrender.com", formData);
+            const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/tolmacclients/getAllUsers", formData);
             console.log("Termin created:", response.data);
             setSuccess("Termin successfully created!");
             setFormData({ name: "", email: "", phone: "" }); // Clear form
