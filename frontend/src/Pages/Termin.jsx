@@ -13,7 +13,7 @@ const Termin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://barbershop-5827.vercel.app/?vercelToolbarCode=oMyzgW10mN59Sb_", formData);
+            const response = await axios.post("https://barbershop-backend-rex2.onrender.com/api/tolmacclients/create", formData);
             console.log("Termin created:", response.data);
             setSuccess("Termin successfully created!");
             setFormData({ name: "", email: "", phone: "" }); // Clear form
