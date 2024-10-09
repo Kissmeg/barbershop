@@ -4,7 +4,7 @@ import bodyParser from "body-parser"
 import dotenv from "dotenv"
 import route from "./routes/userRoutes.js"
 import cors from "cors";
-var jwt = require('jsonwebtoken');
+import jwt  from "jsonwebtoken"
 
 const app = express();
 
@@ -24,4 +24,4 @@ mongoose.connect(MONGURL).then(()=>{
     })
 }).catch((error)=> console.log(error));
 
-app.use("/api/tolmacClients", route);
+app.use("/api", route);

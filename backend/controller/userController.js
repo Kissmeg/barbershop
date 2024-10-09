@@ -16,12 +16,14 @@ export const create = async(req, res)=>{
     }
 }
 
-export const termin = async(req, res)=>{
-    const username = req.body.username
-    const user = {name:username}
-
-    const accesToken =  jwt.sign(user, process.env.SECRET_KEY)
-    res.json({accesToken: accesToken})
+export const hello = async(req, res)=>{
+    try {
+        res.json({
+            text:'my api'
+        })
+    } catch (error) {
+        
+    }
 }
 
 export const fetch = async(req, res)=>{
