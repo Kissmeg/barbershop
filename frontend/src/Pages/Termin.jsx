@@ -13,7 +13,7 @@ const Termin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://barbershop-backend-rex2.onrender.com/api/tolmacclients/create", formData);
+            const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/tolmacclients/getAllUsers", formData);
             console.log("Termin created:", response.data);
             setSuccess("Termin successfully created!");
             setFormData({ name: "", email: "", phone: "" }); // Clear form
@@ -26,37 +26,41 @@ const Termin = () => {
     };
 
     return (
-        <div className="pt-20">
-            <h1>Book a Termin</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Client Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Client Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="phone"
-                    placeholder="Phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                />
-                <button type="submit">Jebme ti asdasdasdasdasdasdasdasd u</button>
-            </form>
-            {success && <div className="text-green-500">{success}</div>}
-            {error && <div className="text-red-500">{error}</div>}
+        <div className="pt-40 ">
+            <p className="text-center">Zakazivanje termina</p>
+            <div className="flex justify-center">
+                
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Client Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Client Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="phone"
+                        placeholder="Phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit">Zakazi termin</button>
+                </form>
+                </div>
+                {success && <div className="text-green-500">{success}</div>}
+                {error && <div className="text-red-500">{error}</div>}
+        
         </div>
     );
 };
