@@ -1,12 +1,15 @@
-import express from "express"
-
-import { fetch, create, update, deleteUser, hello } from "../controller/userController.js"
+import express from "express";
+import { fetch, create, prot, update, deleteUser, termin, ensureToken } from "../controller/userController.js";
 
 const route = express.Router();
-route.get("/hello", hello)
-route.post("/create", create)
-route.get("/getAllUsers", fetch)
-route.put("/update/:id", update)
-route.delete("/delete/:id", deleteUser)
-export default route;
 
+// Dodaj `ensureToken` kao middleware na rute koje zahtevaju autorizaciju
+route.get("/prot", ensureToken, prot);
+route.post("/termin", termin);
+
+route.post("/create", create);
+route.get("/getAllUsers", ensureToken, fetch);  // Ovde dodato ensureToken za proveru
+route.put("/update/:id", ensureToken, update);  // Ovde takođe ensureToken
+route.delete("/delete/:id", ensureToken, deleteUser);  // ensureToken i za brisanje
+
+export default route;
