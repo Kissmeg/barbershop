@@ -20,7 +20,7 @@ const Termin = () => {
   // Funkcija za povlačenje zakazanih termina iz baze
   const fetchScheduledAppointments = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/appointments");
+      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/appointments");
       setScheduledAppointments(response.data); // Podesi zakazane termine iz baze podataka
     } catch (error) {
       toast.error("Greška prilikom povlačenja zakazanih termina.", { position: "top-center" });
