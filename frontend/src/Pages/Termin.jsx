@@ -116,11 +116,11 @@ const Termin = () => {
     <div className="pt-40">
       <ToastContainer /> 
       <p className="text-center text-4xl p-4">Zakazivanje termina</p>
-      <div className="flex justify-center">
+      <div className="lg:flex flex-col justify-center">
         
-        <div className="flex">
+        <div className="lg:flex flex-col">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex gap-4">
+            <div className="lg:flex gap-4">
             <input
               type="text"
               name="name"
@@ -128,7 +128,7 @@ const Termin = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="border p-2 border-[#bc9935]"
+              className="border p-2 border-[#bc9935] "
             />
             <input
               type="text"
@@ -202,7 +202,7 @@ const Termin = () => {
             </button>
           ))}
         </div>
-       <div className="flex justify-center">
+       <div className="lg:flex justify-center">
        <button onClick={() => setModalIsOpen(false)} className="mt-4 bg-red-500 text-white p-2 rounded-md">Zatvori</button>
        </div>
       </Modal>
