@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import Modal from 'react-modal';
 import format from 'date-fns/format';
-import { sr } from 'date-fns/locale'; // Dodaj date-fns formatiranje
-import { ToastContainer, toast } from "react-toastify"; // Importuj Toastify
-import 'react-toastify/dist/ReactToastify.css'; // Toastify stilovi
+import { sr } from 'date-fns/locale'; 
+import { toast, ToastContainer } from "react-toastify"; 
+import 'react-toastify/dist/ReactToastify.css';
 
 Modal.setAppElement('#root');
 
 const Termin = () => {
   const [formData, setFormData] = useState({ name: "", surname: "", email: "", phone: "", time: "" });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [scheduledAppointments, setScheduledAppointments] = useState([]); // Zakazani termini iz baze
+
+  // Funkcija za povlačenje zakazanih termina iz baze
+  const fetchScheduledAppointments = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/appointments");
+      setScheduledAppointments(response.data); // Podesi zakazane termine iz baze podataka
+    } catch (error) {
+      toast.error("Greška prilikom povlačenja zakazanih termina.", { position: "top-center" });
+    }
+  };
+
+  // Pozivaj fetchScheduledAppointments pri inicijalnom učitavanju stranice
+  useEffect(() => {
+    fetchScheduledAppointments();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,45 +38,62 @@ const Termin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (!selectedDate || !formData.time) {
-      toast.error("Niste izabrali datum ili termin!");
+      toast.error("Morate izabrati datum i termin pre potvrde!", { position: "top-center" });
       return;
     }
-
+  
     const formattedDate = format(selectedDate, "dd.MM.yyyy", { locale: sr });
-
+  
+    const hasAppointment = scheduledAppointments.some(appointment => {
+      if (appointment.email === formData.email) {
+        const appointmentDate = new Date(appointment.date.split('.').reverse().join('-') + ' ' + appointment.time);
+        const diffInDays = Math.floor((selectedDate - appointmentDate) / (1000 * 60 * 60 * 24));
+        return diffInDays < 7;
+      }
+      return false;
+    });
+  
+    if (hasAppointment) {
+      toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.", { position: "top-center" });
+      return;
+    }
+  
     try {
-      const response = await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
+      await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
         ...formData,
-        date: formattedDate, // Formatiran datum na srpski
-        time: formData.time
+        date: formattedDate,
       });
-
-      console.log("Termin created:", response.data);
-      setSuccess("Termin uspešno kreiran!");
-      toast.success(`Termin uspešno zakazan za ${formattedDate} u ${formData.time}`);
+  
+      toast.success(`Uspešno zakazan termin za ${formattedDate} u ${formData.time}!`, { position: "top-center" });
       setFormData({ name: "", surname: "", email: "", phone: "", time: "" });
-      setError("");
-      setModalIsOpen(false); // Zatvori modal nakon uspešnog kreiranja termina
+      setModalIsOpen(false);
+      setSelectedDate(null);
+  
+      // Ponovo povuci zakazane termine iz baze kako bi se osvežili podaci
+      fetchScheduledAppointments();
     } catch (error) {
-      toast.error("Došlo je do greške prilikom zakazivanja termina.");
-      setSuccess("");
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message, { position: "top-center" });
+      } else {
+        toast.error("Došlo je do greške prilikom zakazivanja termina.", { position: "top-center" });
+      }
     }
   };
+  
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
     const dayOfWeek = date.getDay();
 
-    // Proveri da li je dan radni (radni dani su od utorka (2) do subote (6))
     if (dayOfWeek >= 2 && dayOfWeek <= 6) {
       setModalIsOpen(true);
-      setAvailableTimes(generateAvailableTimes());
+      setAvailableTimes(generateAvailableTimes(date));
     }
   };
 
-  // Generiši termine na svakih 30 minuta između 8:00 i 18:00
-  const generateAvailableTimes = () => {
+  const generateAvailableTimes = (date) => {
     const times = [];
     let startHour = 8;
     let endHour = 18;
@@ -70,26 +101,26 @@ const Termin = () => {
       times.push(`${hour}:00`);
       times.push(`${hour}:30`);
     }
-    return times;
+    const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
+    const takenTimes = scheduledAppointments
+      .filter(appointment => appointment.date === dateStr)
+      .map(appointment => appointment.time);
+    return times.filter(time => !takenTimes.includes(time));
   };
 
   const tileDisabled = ({ date, view }) => {
-    // Onemogući dane koji nisu radni (ponedeljak i nedelja) i ograniči na 14 dana unapred
     return view === 'month' && (date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)));
-  };
-
-  const handleTimeSelect = (time) => {
-    setFormData({ ...formData, time });
-    setModalIsOpen(false); // Zatvori modal
-    toast.success(`Izabrali ste termin: ${format(selectedDate, "dd.MM.yyyy", { locale: sr })} u ${time}`);
   };
 
   return (
     <div className="pt-40">
-      <div>
-        <p className="text-center">Zakazivanje termina</p>
-        <div className="flex justify-center">
+      <ToastContainer /> 
+      <p className="text-center text-4xl p-4">Zakazivanje termina</p>
+      <div className="flex justify-center">
+        
+        <div className="flex">
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex gap-4">
             <input
               type="text"
               name="name"
@@ -97,7 +128,7 @@ const Termin = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="border p-2"
+              className="border p-2 border-[#bc9935]"
             />
             <input
               type="text"
@@ -106,8 +137,9 @@ const Termin = () => {
               value={formData.surname}
               onChange={handleChange}
               required
-              className="border p-2"
+              className="border p-2 border-[#bc9935]"
             />
+            </div>
             <input
               type="email"
               name="email"
@@ -115,39 +147,31 @@ const Termin = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="border p-2"
+              className="flex w-full border p-2 border-[#bc9935]"
             />
             <input
-              type="text"
+              type="tel"
               name="phone"
               placeholder="Tel. br"
               value={formData.phone}
               onChange={handleChange}
               required
-              className="border p-2"
+              className="flex w-full border p-2 border-[#bc9935]"
             />
-            {selectedDate && (
-              <div className="mt-2">
-                <p>Izabrani datum: {format(selectedDate, "dd.MM.yyyy", { locale: sr })}</p>
-              </div>
-            )}
-            <button type="submit" className="bg-blue-500 text-white p-2">Zakazi termin</button>
+            <button type="submit" className="flex bg-blue-500 text-white p-2">Zakazi termin</button>
           </form>
         </div>
-        {success && <div className="text-green-500">{success}</div>}
-        {error && <div className="text-red-500">{error}</div>}
-      </div>
+      
 
-      <div className="mt-10 flex justify-center">
+      <div className="mx-8 flex justify-center">
         <Calendar
           onChange={handleDateChange}
           tileDisabled={tileDisabled}
           value={new Date()}
-          className="border"
+          className=""
         />
       </div>
-
-      {/* Modal za prikaz dostupnih termina */}
+      </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -162,23 +186,26 @@ const Termin = () => {
           },
         }}
       >
-        <h2>Izaberite termin</h2>
-        <div className="space-y-2">
+        <p className="text-center text-2xl m-4">Izaberite termin</p>
+        <div className="grid grid-cols-5 gap-4">
           {availableTimes.map((time, index) => (
             <button
               key={index}
-              onClick={() => handleTimeSelect(time)}
-              className="block w-full bg-gray-200 p-2 text-center hover:bg-gray-300"
+              onClick={() => {
+                setFormData({ ...formData, time });
+                toast.info(`Izabrali ste termin u ${time} sati.`, { position: "top-center" });
+                setModalIsOpen(false); // Zatvaranje modala odmah nakon izbora termina
+              }}
+              className="block w-full p-2 rounded-md bg-gray-200 text-center hover:bg-gray-300"
             >
               {time}
             </button>
           ))}
         </div>
-        <button onClick={() => setModalIsOpen(false)} className="mt-4 bg-red-500 text-white p-2">Zatvori</button>
+       <div className="flex justify-center">
+       <button onClick={() => setModalIsOpen(false)} className="mt-4 bg-red-500 text-white p-2 rounded-md">Zatvori</button>
+       </div>
       </Modal>
-
-      {/* ToastContainer za prikaz poruka */}
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
     </div>
   );
 };
