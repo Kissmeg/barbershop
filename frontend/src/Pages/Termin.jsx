@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement('#root');
 
 const Termin = () => {
+  const [showCalendar, setShowCalendar] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ name: "", surname: "", email: "", phone: "", time: "" });
   const [selectedDate, setSelectedDate] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -115,63 +117,61 @@ const Termin = () => {
   return (
     <div className="pt-40">
       <ToastContainer /> 
-      <p className="text-center text-4xl p-4">Zakazivanje termina</p>
-      <div className="lg:flex flex-col justify-center">
-        
-        <div className="lg:flex flex-col">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="lg:flex gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Ime"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="border p-2 border-[#bc9935] "
-            />
-            <input
-              type="text"
-              name="surname"
-              placeholder="Prezime"
-              value={formData.surname}
-              onChange={handleChange}
-              required
-              className="border p-2 border-[#bc9935]"
-            />
-            </div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="flex w-full border p-2 border-[#bc9935]"
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Tel. br"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="flex w-full border p-2 border-[#bc9935]"
-            />
-            <button type="submit" className="flex bg-blue-500 text-white p-2">Zakazi termin</button>
+      <p className="text-center text-2xl lg:text-4xl p-4 mb-10">Zakazivanje termina</p>
+      
+      {showForm &&(
+    <div>
+      <div className="lg:flex flex justify-center">
+        <div className="lg:flex flex">
+          <form onSubmit={handleSubmit} className="p-4">
+              <div className="">
+                <div>
+                  <p className="before:content-['*'] before:text-red-500">Ime</p>
+                  <input type="text" name="name" placeholder="Ime" value={formData.name} onChange={handleChange} required           className=" lg:w-full flex border p-2 border-[#bc9935] "/>
+                </div>
+                
+                <div>
+                  <p className="before:content-['*'] before:text-red-500">Prezime</p>
+                  <input type="text" name="surname" placeholder="Prezime" value={formData.surname} onChange={handleChange} required className=" lg:w-full flex border p-2 border-[#bc9935]"/>
+                </div>
+                
+                <div className="lg:flex gap-4">
+                  <div>
+                    <p className="flex before:content-['*'] before:text-red-500">Email</p>
+                    <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required      className=" border p-2 border-[#bc9935]"/>
+                  </div>
+
+                  <div>
+                    
+                    <p className="flex before:content-['*'] before:text-red-500"> Telefon</p>
+                    <input type="tel" name="phone" placeholder="Tel. br" value={formData.phone} onChange={handleChange} required      className=" border p-2 border-[#bc9935]"/>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-between">
+              <button className="p-2 mt-2 border-2 border-black" onClick={()=>{setShowForm(false); setShowCalendar(true) }}>Povratak</button>
+                <button className="flex bg-[#bc9935] text-white p-2 mt-2">Zakazi termin</button>
+                
+              </div>
+              
           </form>
         </div>
-      
+      </div>
+    </div>
+      )}
+      {showCalendar &&(
+        <div>
+          <div className="mx-8 flex justify-center">
+            <Calendar
+              onChange={handleDateChange}
+              tileDisabled={tileDisabled}
+              value={new Date()}
+              className=""
+            />
+          </div>
+        </div>
+      )}
 
-      <div className="mx-8 flex justify-center">
-        <Calendar
-          onChange={handleDateChange}
-          tileDisabled={tileDisabled}
-          value={new Date()}
-          className=""
-        />
-      </div>
-      </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -192,6 +192,8 @@ const Termin = () => {
             <button
               key={index}
               onClick={() => {
+                setShowCalendar(false);
+                setShowForm(true);
                 setFormData({ ...formData, time });
                 toast.info(`Izabrali ste termin u ${time} sati.`, { position: "top-center" });
                 setModalIsOpen(false); // Zatvaranje modala odmah nakon izbora termina
