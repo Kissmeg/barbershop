@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../model/userModel.js";
 
 export const loginAdmin = async (req, res)=>{
     try {
