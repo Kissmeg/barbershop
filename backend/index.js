@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import route from "./routes/userRoutes.js"
 import cors from "cors";
 import jwt  from "jsonwebtoken"
+import adminRoute from "./routes/adminRoutes.js"
 
 const app = express();
 
@@ -25,3 +26,4 @@ mongoose.connect(MONGURL).then(()=>{
 }).catch((error)=> console.log(error));
 
 app.use("/api", route);
+app.use("/api/admin", adminRoute);
