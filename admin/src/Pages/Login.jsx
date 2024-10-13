@@ -15,8 +15,8 @@ const Login = () => {
 
         try {
             
-            if (state ==='Admin') {
-                const {data} = await axios.post(backendUrl + '/api/login',{email,password})
+           
+                const {data} = await axios.post(backendUrl + '/api/admin/login',{email,password})
                 if(data.success){
                     toast.success("Uspesno ulogovan")
                     localStorage.setItem('adminToken',data.token)
@@ -26,7 +26,7 @@ const Login = () => {
                 toast.error("Pogresna sifra!")
             }
 
-        } catch (error) {
+         catch (error) {
             
         }
 

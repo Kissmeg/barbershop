@@ -30,3 +30,31 @@ export const fetchData = async(req, res) => {
         res.status(500).json({error: "Error"});
     }
 }
+
+export const deleteUser = async(req, res) => {
+    try {
+        const id = req.params.id;
+        const userExist = await User.findOne({_id: id});
+        if (!userExist) {
+            return res.status(404).json({message: "User not found."});
+        }
+        await User.findByIdAndDelete(id);
+        res.status(201).json({message: "User Deleted Sucessfully"});
+    } catch (error) {
+        res.status(500).json({error: "Error"});  
+    }
+}
+
+export const updateUser = async(req, res) => {
+    try {
+        const id = req.params.id;
+        const userExist = await User.findOne({_id: id});
+        if (!userExist) {
+            return res.status(404).json({message: "User not found."});
+        }
+        const updateUser = await User.findByIdAndUpdate(id, req.body, {new: true});
+        res.status(201).json(updateUser);
+    } catch (error) {
+        res.status(500).json({error: "Error"});  
+    }
+}

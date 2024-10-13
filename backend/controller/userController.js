@@ -74,15 +74,18 @@ export const prot = async (req, res) => {
 // Dodaj `export` da bi mogla biti uvezena
 export function ensureToken(req, res, next) {
     const bearerHeader = req.headers["authorization"];
-    if (typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.split(" ");
-        const bearerToken = bearer[1];
+    if (typeof bearerHeader !== 'undefined' && bearerHeader.startsWith("Bearer ")) {
+        const bearerToken = bearerHeader.split(" ")[1];
+        if (!bearerToken) {
+            return res.sendStatus(403); // Token nije prisutan
+        }
         req.token = bearerToken;
         next();
     } else {
-        res.sendStatus(403);
+        res.sendStatus(403); // Header nije prisutan ili ne sadrži Bearer
     }
 }
+
 
 export const termin = async(req, res) => {
     try {

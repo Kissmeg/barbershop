@@ -5,8 +5,9 @@ const route = express.Router();
 
 // Dodaj `ensureToken` kao middleware na rute koje zahtevaju autorizaciju
 route.get("/prot", ensureToken, prot);
-route.post("/termin", termin);
+
 route.post("/create", create);
+
 route.get("/getAllUsers",ensureToken, fetch);  // Ovde dodato ensureToken za proveru
 route.get("/appointments", fetchAppointments)
 route.put("/update/:id", ensureToken, update);  // Ovde takođe ensureToken
