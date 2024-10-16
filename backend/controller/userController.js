@@ -52,6 +52,18 @@ export const fetchAppointments = async (req, res) => {
       res.status(500).json({ error: "Greška prilikom dohvatanja termina." });
     }
   };
+
+  export const fetchEmails = async (req, res) => {
+    try {
+      const appointments = await User.find({}, 'email'); // Samo datum i vreme
+      if (appointments.length === 0) {
+        return res.status(404).json({ message: "Nema email-ova." });
+      }
+      res.status(200).json(appointments);
+    } catch (error) {
+      res.status(500).json({ error: "Greška prilikom dohvatanja emailova." });
+    }
+  };
   
 export const prot = async (req, res) => {
     try {

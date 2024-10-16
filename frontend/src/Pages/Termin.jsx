@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement('#root');
 
 const Termin = () => {
+  const [emails, setEmails] = useState([]);
   const [showCalendar, setShowCalendar] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ name: "", surname: "", email: "", phone: "", time: "" });
@@ -22,15 +23,23 @@ const Termin = () => {
   // Funkcija za povlačenje zakazanih termina iz baze
   const fetchScheduledAppointments = async () => {
     try {
-      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/appointments");
+      const response = await axios.get("http://localhost:8000/api/appointments");
       setScheduledAppointments(response.data); // Podesi zakazane termine iz baze podataka
     } catch (error) {
-      toast.error("Greška prilikom povlačenja zakazanih termina.", { position: "top-center" });
+      toast.error("Greška prilikom povlačenja zakazanih termina.");
     }
   };
-
+  const fetchEmails = async ()=> {
+    try {
+      const response = await axios.get("http://localhost:8000/api/emails")
+      setEmails(response.data)
+    } catch (error) {
+      toast.error("Greska prilikom povlacenja emailova.")
+    }
+  }
   // Pozivaj fetchScheduledAppointments pri inicijalnom učitavanju stranice
   useEffect(() => {
+    fetchEmails();
     fetchScheduledAppointments();
   }, []);
 
@@ -42,49 +51,54 @@ const Termin = () => {
     e.preventDefault();
   
     if (!selectedDate || !formData.time) {
-      toast.error("Morate izabrati datum i termin pre potvrde!", { position: "top-center" });
+      toast.error("Morate izabrati datum i termin pre potvrde!");
       return;
     }
   
     const formattedDate = format(selectedDate, "dd.MM.yyyy", { locale: sr });
   
-    const hasAppointment = scheduledAppointments.some(appointment => {
-      if (appointment.email === formData.email) {
-        const appointmentDate = new Date(appointment.date.split('.').reverse().join('-') + ' ' + appointment.time);
-        const diffInDays = Math.floor((selectedDate - appointmentDate) / (1000 * 60 * 60 * 24));
-        return diffInDays < 7;
-      }
-      return false;
-    });
+    // Proveri da li postoji email u bazi
+    const emailFound = emails.some(emailObj => emailObj.email.trim() === formData.email.trim());
   
-    if (hasAppointment) {
-      toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.", { position: "top-center" });
-      return;
+    if (emailFound) {
+      const hasAppointment = scheduledAppointments.some(appointment => {
+        const appointmentDate = new Date(appointment.date.split('.').reverse().join('-') + ' ' + appointment.time);
+        const diffInDays = Math.ceil((selectedDate - appointmentDate) / (1000 * 60 * 60 * 24));
+        return diffInDays >= 0 && diffInDays < 7;
+      });
+  
+      if (hasAppointment) {
+        toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
+        return;
+      }
+    } else {
+      console.log("No previous appointments found for this email.");
     }
   
     try {
-      await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
+      await axios.post("http://localhost:8000/api/create", {
         ...formData,
         date: formattedDate,
       });
   
-      toast.success(`Uspešno zakazan termin za ${formattedDate} u ${formData.time}!`, { position: "top-center" });
+      toast.success(`Uspešno zakazan termin za ${formattedDate} u ${formData.time}!`);
       setFormData({ name: "", surname: "", email: "", phone: "", time: "" });
       setModalIsOpen(false);
       setSelectedDate(null);
   
-      // Ponovo povuci zakazane termine iz baze kako bi se osvežili podaci
+      // Osvježavanje zakazanih termina i emailova
       fetchScheduledAppointments();
+      fetchEmails(); // Dodato za osvežavanje email liste
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message, { position: "top-center" });
       } else {
-        toast.error("Došlo je do greške prilikom zakazivanja termina.", { position: "top-center" });
+        toast.error("Došlo je do greške prilikom zakazivanja termina.");
       }
     }
   };
   
-
+  
   const handleDateChange = (date) => {
     setSelectedDate(date);
     const dayOfWeek = date.getDay();
@@ -163,6 +177,7 @@ const Termin = () => {
         <div>
           <div className="mx-8 flex justify-center">
             <Calendar
+             locale="sr-RS"
               onChange={handleDateChange}
               tileDisabled={tileDisabled}
               value={new Date()}

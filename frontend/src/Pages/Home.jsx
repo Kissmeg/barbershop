@@ -14,6 +14,7 @@ const Home = () => {
   return (
     <div>
       <Hero/>
+      <div className=''>
       <Salon/>
       <Stats/>
       <Usluga/>
@@ -23,7 +24,7 @@ const Home = () => {
       <Cenovnik/>
       <Rad />
       <RadnoVreme/>
-      
+      </div>
 
     </div>
   )

@@ -12,7 +12,7 @@ const App = () => {
   const {adminToken} = useContext(AdminContext)
 
  return adminToken ? (
-  <div className='bg-blue-800'>
+  <div className=''>
     <ToastContainer/>
     <Routes>
       <Route path={'/'} element={<Home/>}/>

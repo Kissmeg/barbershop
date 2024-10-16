@@ -33,19 +33,19 @@ const Login = () => {
     }
 
   return (
-    <div>
+    <div className=''>
       <form onSubmit={onSubmitHandler} action="" className='min-h-[80vh] flex items-center' >
-        <div className='flex flex-col gap-4 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-[5e5e5e] text-sm shadow-lg'>
-            <p className='text-2xl font-semibold m-auto'> <span>{state} Login</span></p>
-            <div>
-                <p>Email</p>
-                <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" required/>
+        <div className='flex flex-col gap-4 m-auto p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-[5e5e5e] text-sm shadow-lg justify-center'>
+            <p className='text-4xl font-bold text-center pb-4'><span>{state} Login</span></p>
+            <div className=''>
+                <p className='text-2xl font-bold pb-2'>Email</p>
+                <input className='p-2 rounded-lg w-full bg-blue-200'placeholder='email...' onChange={(e)=>setEmail(e.target.value)} value={email} type="email" required/>
             </div>
             <div>
-                <p>Password</p>
-                <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" required/>
+                <p className='text-2xl font-bold pb-2'>Password</p>
+                <input className='p-2 rounded-lg w-full bg-blue-200'placeholder='password...' onChange={(e)=>setPassword(e.target.value)} value={password} type="password" required/>
             </div>
-            <button>Login</button>
+            <button className='p-2 border-2 border-black hover:border-white hover:bg-black hover:text-white transition-all ease-in-out text-xl pt-2'>Login</button>
         </div>
       </form>
     </div>
