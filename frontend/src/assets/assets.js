@@ -28,10 +28,11 @@ import fade2 from './fade2.webp'
 import fade3 from './fade3.webp'
 import barbershop from './barbershop.webp'
 import barberchair from './barberchair.webp'
-
+import exit from './exit.png'
 
 export const assets = { 
     facebook,
+    exit,
     menu,
     facebook_black,
     tiktok,

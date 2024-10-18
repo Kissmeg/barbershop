@@ -74,42 +74,52 @@ const Navbar = () => {
         <div className='lg:hidden flex justify-end'>
           <img src={assets.menu} alt="" className='w-8 m-4' onClick={()=> setMobileMenu(!mobileMenu)}/>
           {mobileMenu && (
-            <div className='absolute left-0 p-4 w-full backdrop-blur-xl h-screen'>
+            <div className='absolute left-0 p-4 w-full bg-neutral-950 text-2xl h-screen'>
               <div className='flex flex-col text-left'>  
-                <NavLink to='/' className='transition-all relative flex flex-col gap-1 group'>
-                  <p className=' text-zinc-200 hover:text-zinc-400'>POČETNA</p>
-                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
-                </NavLink>
-                <NavLink to='/termin' className='transition-all relative flex flex-col  gap-1 group'>
-                  <p className='text-[#bc9355]'>ZAKAZI TERMIN</p>
-                  <div className='w-0 h-0.5 bg-[#886930] transition-all duration-300 group-hover:w-2/4 '></div>
-                </NavLink>
+                <div onClick={()=>setMobileMenu(!mobileMenu)}>
+                  <NavLink to='/' className='transition-all relative flex flex-col gap-1 group'>
+                    <p className=' text-zinc-200 hover:text-zinc-400'>POČETNA</p>
+                    <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                  </NavLink>
+                </div>
+
+                <div onClick={()=>{setMobileMenu(!mobileMenu)}}>
+                  <NavLink to='/termin' className='transition-all relative flex flex-col  gap-1 group'>
+                    <p className='text-[#bc9355]'>ZAKAZI TERMIN</p>
+                    <div className='w-0 h-0.5 bg-[#886930] transition-all duration-300 group-hover:w-2/4 '></div>
+                  </NavLink>
+                </div>
                 
                 {/* Implementacija skrolovanja sa preusmeravanjem */}
-                <div onClick={() => handleScrollLink('usluge')} className='transition-all relative flex flex-col  gap-1 group cursor-pointer'>
+                <div onClick={() => {handleScrollLink('usluge');setMobileMenu(!mobileMenu)}} className='transition-all relative flex flex-col  gap-1 group cursor-pointer'>
                   <p className='text-zinc-200 hover:text-zinc-400'>USLUGE</p>
                   <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
                 </div>
                 
-                <div onClick={() => handleScrollLink('cenovnik')} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
+                <div onClick={() => {handleScrollLink('cenovnik');setMobileMenu(!mobileMenu)}} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
                   <p className='text-zinc-200 hover:text-zinc-400'>CENOVNIK</p>
                   <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
                 </div>
                 
-                <div onClick={() => handleScrollLink('rad')} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
+                <div onClick={() => {handleScrollLink('rad');setMobileMenu(!mobileMenu)}} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
                   <p className='text-zinc-200 hover:text-zinc-400'>GALERIJA</p>
                   <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
                 </div>
                 
-                <div onClick={() => handleScrollLink('radnovr')} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
+                <div onClick={() => {handleScrollLink('radnovr');setMobileMenu(!mobileMenu)}} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
                   <p className='text-zinc-200 hover:text-zinc-400'>RADNO VREME</p>
                   <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
                 </div>
                 
-                <NavLink to='/contact' className='transition-all relative flex flex-col gap-1 group'>
-                  <p className='text-zinc-200 hover:text-zinc-400'>KONTAKT</p>
-                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
-                </NavLink>
+                <div onClick={()=>setMobileMenu(!mobileMenu)}>
+                  <NavLink to='/contact' className='transition-all relative flex flex-col gap-1 group'>
+                    <p className='text-zinc-200 hover:text-zinc-400'>KONTAKT</p>
+                    <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                  </NavLink>
+                </div>
+              </div>
+              <div className='absolute right-0 top-0 p-4'>
+                <img className='w-8' src={assets.exit} alt="" onClick={()=>setMobileMenu(!mobileMenu)} />
               </div>
             </div>
           )}
