@@ -40,7 +40,21 @@ export const create = async(req, res)=>{
         res.status(500).json({ message: "Došlo je do greške prilikom kreiranja termina." });
       }
 }
+export const createAppointment = async(req, res)=>{
+  try {
+      const { name, surname, email, phone, date, time } = req.body;
+      
 
+      // Kreiranje novog termina
+      const newTermin = new User({ name, surname, email, phone, date, time });
+      await newTermin.save();
+  
+      res.status(201).json({ message: `Termin uspešno kreiran za ${date} u ${time} sati!` });
+    } catch (error) {
+      console.error("Greška prilikom kreiranja termina:", error);
+      res.status(500).json({ message: "Došlo je do greške prilikom kreiranja termina." });
+    }
+}
 export const fetchAppointments = async (req, res) => {
     try {
       const appointments = await User.find({}, 'date time'); // Samo datum i vreme

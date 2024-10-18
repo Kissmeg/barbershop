@@ -1,5 +1,5 @@
 import express from "express";
-import { fetch, create, prot, update, fetchAppointments, deleteUser, termin, ensureToken, fetchEmails } from "../controller/userController.js";
+import { fetch, create, prot, update, fetchAppointments, deleteUser, termin, ensureToken, fetchEmails, createAppointment } from "../controller/userController.js";
 
 const route = express.Router();
 
@@ -11,6 +11,7 @@ route.post("/create", create);
 route.get("/getAllUsers",ensureToken, fetch);  // Ovde dodato ensureToken za proveru
 
 route.get("/appointments", fetchAppointments)
+route.post("/createAppointment", createAppointment)
 route.get("/emails", fetchEmails)
 
 

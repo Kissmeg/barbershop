@@ -23,7 +23,7 @@ const Termin = () => {
   // Funkcija za povlačenje zakazanih termina iz baze
   const fetchScheduledAppointments = async () => {
     try {
-      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/appointments");
+      const response = await axios.get("http://localhost:8000/api/appointments");
       setScheduledAppointments(response.data); // Podesi zakazane termine iz baze podataka
     } catch (error) {
       toast.error("Greška prilikom povlačenja zakazanih termina.");
@@ -31,7 +31,7 @@ const Termin = () => {
   };
   const fetchEmails = async ()=> {
     try {
-      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/emails")
+      const response = await axios.get("http://localhost:8000/api/emails")
       setEmails(response.data)
     } catch (error) {
       toast.error("Greska prilikom povlacenja emailova.")
@@ -76,7 +76,7 @@ const Termin = () => {
     }
   
     try {
-      await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
+      await axios.post("http://localhost:8000/api/create", {
         ...formData,
         date: formattedDate,
       });
@@ -91,7 +91,7 @@ const Termin = () => {
       fetchEmails(); // Dodato za osvežavanje email liste
     } catch (error) {
       if (error.response && error.response.data.message) {
-        toast.error(error.response.data.message, { position: "top-center" });
+        toast.error(error.response.data.message);
       } else {
         toast.error("Došlo je do greške prilikom zakazivanja termina.");
       }
@@ -125,13 +125,29 @@ const Termin = () => {
   };
 
   const tileDisabled = ({ date, view }) => {
-    return view === 'month' && (date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)));
+    if (view === 'month') {
+      const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
+  
+      // Provera da li postoji termin sa vremenom 'slobodan_dan' za taj datum
+      const isOffDay = scheduledAppointments.some(
+        (appointment) => appointment.date === dateStr && appointment.time === 'slobodan_dan'
+      );
+  
+      // Provera da li su svi termini za taj dan zauzeti
+      const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
+      const allTimesTaken = takenTimes.length >= 20;
+  
+      return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+    }
+    return false;
   };
+  
+  
 
   return (
-    <div className="pt-40">
+    <div className="pt-40 mb-20">
       <ToastContainer /> 
-      <p className="text-center text-2xl lg:text-4xl p-4 mb-10">Zakazivanje termina</p>
+      <p className="text-center text-2xl lg:text-4xl p-4 m-4">Zakazivanje termina</p>
       
       {showForm &&(
     <div>
@@ -210,7 +226,7 @@ const Termin = () => {
                 setShowCalendar(false);
                 setShowForm(true);
                 setFormData({ ...formData, time });
-                toast.info(`Izabrali ste termin u ${time} sati.`, { position: "top-center" });
+                toast.info(`Izabrali ste termin u ${time} sati.`);
                 setModalIsOpen(false); // Zatvaranje modala odmah nakon izbora termina
               }}
               className="block w-full p-2 rounded-md bg-gray-200 text-center hover:bg-gray-300"
@@ -223,6 +239,7 @@ const Termin = () => {
        <button onClick={() => setModalIsOpen(false)} className="mt-4 bg-red-500 text-white p-2 rounded-md">Zatvori</button>
        </div>
       </Modal>
+      <p className="text-center text-sm italic font-light m-4">Napomena: kada zakazete termin, sledeci termin ćete moći tek za nedelju dana da zakažete.</p>
     </div>
   );
 };

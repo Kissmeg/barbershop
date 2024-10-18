@@ -36,7 +36,6 @@ const Navbar = () => {
         </div>
         
         <div className='hidden sm:flex gap-4 p-5 text-sm'>
-          
           <NavLink to='/' className='transition-all relative flex flex-col items-center gap-1 group'>
             <p className=' text-zinc-200 hover:text-zinc-400'>POČETNA</p>
             <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
@@ -75,8 +74,43 @@ const Navbar = () => {
         <div className='lg:hidden flex justify-end'>
           <img src={assets.menu} alt="" className='w-8 m-4' onClick={()=> setMobileMenu(!mobileMenu)}/>
           {mobileMenu && (
-            <div>
-              {console.log('radi')}
+            <div className='absolute left-0 p-4 w-full backdrop-blur-xl h-screen'>
+              <div className='flex flex-col text-left'>  
+                <NavLink to='/' className='transition-all relative flex flex-col gap-1 group'>
+                  <p className=' text-zinc-200 hover:text-zinc-400'>POČETNA</p>
+                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                </NavLink>
+                <NavLink to='/termin' className='transition-all relative flex flex-col  gap-1 group'>
+                  <p className='text-[#bc9355]'>ZAKAZI TERMIN</p>
+                  <div className='w-0 h-0.5 bg-[#886930] transition-all duration-300 group-hover:w-2/4 '></div>
+                </NavLink>
+                
+                {/* Implementacija skrolovanja sa preusmeravanjem */}
+                <div onClick={() => handleScrollLink('usluge')} className='transition-all relative flex flex-col  gap-1 group cursor-pointer'>
+                  <p className='text-zinc-200 hover:text-zinc-400'>USLUGE</p>
+                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                </div>
+                
+                <div onClick={() => handleScrollLink('cenovnik')} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
+                  <p className='text-zinc-200 hover:text-zinc-400'>CENOVNIK</p>
+                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                </div>
+                
+                <div onClick={() => handleScrollLink('rad')} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
+                  <p className='text-zinc-200 hover:text-zinc-400'>GALERIJA</p>
+                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                </div>
+                
+                <div onClick={() => handleScrollLink('radnovr')} className='transition-all relative flex flex-col gap-1 group cursor-pointer'>
+                  <p className='text-zinc-200 hover:text-zinc-400'>RADNO VREME</p>
+                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                </div>
+                
+                <NavLink to='/contact' className='transition-all relative flex flex-col gap-1 group'>
+                  <p className='text-zinc-200 hover:text-zinc-400'>KONTAKT</p>
+                  <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>
+                </NavLink>
+              </div>
             </div>
           )}
         </div>

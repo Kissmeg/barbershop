@@ -10,10 +10,6 @@ import { sr } from 'date-fns/locale';
 import { toast } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
 const DodajKorisnika = () => {
-
-  
-
-
   const [data, setData] = useState([]);
   const [fetchIdUser, setFetchIdUser] = useState();
   const [updateForm, setUpdateForm] = useState([]);
@@ -50,7 +46,7 @@ const DodajKorisnika = () => {
           toast.error("Neuspešno ažuriranje korisnika.");
       }
   }
-    const deleteUser = async (userId) => {
+  const deleteUser = async (userId) => {
       try {
           await axios.delete(`http://localhost:8000/api/admin/delete/${userId}`, {
               headers: {
@@ -89,10 +85,11 @@ const DodajKorisnika = () => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     const dayOfWeek = date.getDay();
-
+    
     if (dayOfWeek >= 2 && dayOfWeek <= 6) {
       setAppointmentModal(true);
       setAvailableTimes(generateAvailableTimes(date));
+      
     }
   };
 
@@ -112,8 +109,23 @@ const DodajKorisnika = () => {
   };
 
   const tileDisabled = ({ date, view }) => {
-    return view === 'month' && (date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)));
+    if (view === 'month') {
+      const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
+  
+      // Provera da li postoji termin sa vremenom 'slobodan_dan' za taj datum
+      const isOffDay = scheduledAppointments.some(
+        (appointment) => appointment.date === dateStr && appointment.time === 'slobodan_dan'
+      );
+  
+      // Provera da li su svi termini za taj dan zauzeti
+      const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
+      const allTimesTaken = takenTimes.length >= 20;
+  
+      return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+    }
+    return false;
   };
+  
 
   const fetchUsers = async () => {
         try {
@@ -163,7 +175,7 @@ const DodajKorisnika = () => {
       });
   
       toast.success(`Uspešno zakazan termin za ${formattedDate} u ${addUser.time}!`);
-      setAddUser({ name: "", surname: "", email: "", phone: "", time: "" });
+      
       setAppointmentModal(false);
       setSelectedDate(null);
   
@@ -181,11 +193,12 @@ const DodajKorisnika = () => {
   useEffect(()=>{
     fetchUsers();
   },[data])
+  
   return (
     <div className=''>
       <div className=" grid grid-cols-5 grid-rows-2 gap-4">
           
-          <div className="row-span-2 bg-gray-300 shadow-2xl h-screen ">
+          <div className="row-span-2 bg-gray-300 shadow-2xl h-screen">
               <Sidemenu />
           </div>
           

@@ -4,6 +4,10 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { AdminContext } from '../Context/AdminContext';
 import Sidemenu from './Sidemenu';
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
+import format from 'date-fns/format';
+import { sr } from 'date-fns/locale'; 
 
 const Dashboard = () => {
     const [fetchIdUser, setFetchIdUser] = useState();
@@ -11,10 +15,28 @@ const Dashboard = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { adminToken } = useContext(AdminContext);
     const [data, setData] = useState([]);
-    
+    const [scheduledAppointments, setScheduledAppointments] = useState([]); // Zakazani termini iz baze
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [appointmentModal, setAppointmentModal] = useState(false);
+    const [availableTimes, setAvailableTimes] = useState([]);
     // Paginacija
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 5 // Broj korisnika po stranici
+
+    const generateAvailableTimes = (date) => {
+        const times = [];
+        let startHour = 8;
+        let endHour = 18;
+        for (let hour = startHour; hour < endHour; hour++) {
+          times.push(`${hour}:00`);
+          times.push(`${hour}:30`);
+        }
+        const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
+        const takenTimes = scheduledAppointments
+          .filter(appointment => appointment.date === dateStr)
+          .map(appointment => appointment.time);
+        return times.filter(time => !takenTimes.includes(time));
+      };
 
     const submitUpdate = async (event) => {
         event.preventDefault();  // Sprečava refresh stranice
@@ -71,7 +93,35 @@ const Dashboard = () => {
 
     // Paginacija
     const totalPages = Math.ceil(data.length / usersPerPage);
+    
+    const tileDisabled = ({ date, view }) => {
+        if (view === 'month') {
+          const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
+      
+          // Provera da li postoji termin sa vremenom 'slobodan_dan' za taj datum
+          const isOffDay = scheduledAppointments.some(
+            (appointment) => appointment.date === dateStr && appointment.time === 'slobodan_dan'
+          );
+      
+          // Provera da li su svi termini za taj dan zauzeti
+          const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
+          const allTimesTaken = takenTimes.length >= 20;
+      
+          return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+        }
+        return false;
+      };
 
+      const handleDateChange = (date) => {
+        setSelectedDate(date);
+        const dayOfWeek = date.getDay();
+        
+        if (dayOfWeek >= 2 && dayOfWeek <= 6) {
+          setAppointmentModal(true);
+          setAvailableTimes(generateAvailableTimes(date));
+          
+        }
+      };
     return (
         <div className='grid grid-cols-5 grid-rows-5 gap-4'>
             <div className="row-span-5 bg-gray-300 shadow-2xl h-screen">
@@ -168,39 +218,44 @@ const Dashboard = () => {
                 }}
             >
                 <div>
-                    <form onSubmit={submitUpdate} className=''>
+                
+                <div>
+                    <div className="flex justify-center p-4">
+                        <Calendar
+                        onChange={handleDateChange}
+                        tileDisabled={tileDisabled}
+                        value={new Date()}
+                        className=""
+                        />
+                    </div>
+                </div>
+                <form className='p-4 flex justify-center' onSubmit={submitUpdate}>
+                    <div>
+                        <div>
+                            <p>ID</p>
+                            <p className='text-xs text-center'>{fetchIdUser}</p>
+                        </div>
                         <div className=''>
-                            <p className='font-bold'>ID</p>
-                            <p className='text-xs'>{fetchIdUser}</p>
-                        </div>
-                        <div className='my-4'>
                             <p>Ime</p>
-                            <input className='border-2 border-black' type="text" name='name' value={updateForm.name} onChange={(e) => setUpdateForm({ ...updateForm, name: e.target.value })} />
+                            <input  className='border-2 border-black' type="text" name='name' value={updateForm.name} onChange={(e) => setUpdateForm({ ...updateForm, name: e.target.value })}/>
                         </div>
-                        <div className='my-4'>
+                        <div className=''>
                             <p>Prezime</p>
                             <input className='border-2 border-black' type="text" name='surname' value={updateForm.surname} onChange={(e) => setUpdateForm({ ...updateForm, surname: e.target.value })} />
                         </div>
-                        <div className='my-4'>
+                        <div className=''>
                             <p>Email</p>
                             <input className='border-2 border-black' type="email" name='email' value={updateForm.email} onChange={(e) => setUpdateForm({ ...updateForm, email: e.target.value })} />
                         </div>
-                        <div className='my-4'>
+                        <div className=''>
                             <p>Telefon</p>
                             <input className='border-2 border-black' type="number" name='phone' value={updateForm.phone} onChange={(e) => setUpdateForm({ ...updateForm, phone: e.target.value })} />
                         </div>
-                        <div className='my-4'>
-                            <p>Datum</p>
-                            <input className='border-2 border-black' type="date" name='date' value={updateForm.date} onChange={(e) => setUpdateForm({ ...updateForm, date: e.target.value })} />
-                        </div>
-                        <div className='my-4'>
-                            <p>Termin</p>
-                            <input className='border-2 border-black' type="time" name='time' value={updateForm.time} onChange={(e) => setUpdateForm({ ...updateForm, time: e.target.value })} />
-                        </div>
                         <div className='flex justify-center'>
-                            <button className='p-2 bg-blue-400' type='submit'>Ažuriraj korisnika</button>
+                            <button className='p-2 m-4 bg-blue-400 rounded-lg hover:bg-blue-500 ease-in-out transition-all hover:scale-105' type='submit'>Dodaj korisnika</button>
                         </div>
-                    </form>
+                    </div>
+                </form>
                 </div>
             </Modal>
         </div>
