@@ -76,7 +76,7 @@ const Termin = () => {
     }
   
     try {
-      await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
+      await axios.post("http://localhost:8000/api/create", {
         ...formData,
         date: formattedDate,
       });

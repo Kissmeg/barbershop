@@ -6,7 +6,7 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [mobileMenu, setMobileMenu] = useState(true);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   const handleScrollLink = (target) => {
     if (location.pathname !== '/') {

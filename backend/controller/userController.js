@@ -3,13 +3,25 @@ import jwt from "jsonwebtoken";
 
 export const create = async(req, res)=>{
     try {
-        const { name, surname, email, phone, date, time } = req.body;
-        const requestedDate = new Date(date);
-    
-        // Provera da li korisnik pokušava da zakazuje unazad
-        const today = new Date();
+      const { name, surname, email, phone, date, time } = req.body;
+
+      // Parsiranje datuma u DD.MM.YYYY formatu
+      const [day, month, year] = date.split(".");
+      const requestedDate = new Date(year, month - 1, day); // meseci su od 0 do 11
+      const today = new Date();
+      
+      // Formatiranje datuma u "dan, mesec, godina"
+      const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+      const formattedDate = requestedDate.toLocaleDateString('sr-RS', options);
+      
+      console.log(formattedDate); // Ispisuje datum u formatu "dan, mesec, godina"
+      
+        
+        
         if (requestedDate < today) {
-          return res.status(400).json({ message: "Ne možete zakazivati termine u prošlosti." });
+          
+            
+          return res.status(400).json({ message: requestedDate + " " + "Ne možete zakazivati termine u prošlosti." });
         }
     
         // Provera da li korisnik već ima zakazan termin u budućnosti

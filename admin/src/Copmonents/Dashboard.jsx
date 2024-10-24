@@ -10,15 +10,19 @@ import format from 'date-fns/format';
 import { sr } from 'date-fns/locale'; 
 
 const Dashboard = () => {
+    const [modalTermin, setModalTermin] = useState(false);
+
     const [fetchIdUser, setFetchIdUser] = useState();
     const [updateForm, setUpdateForm] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { adminToken } = useContext(AdminContext);
     const [data, setData] = useState([]);
     const [scheduledAppointments, setScheduledAppointments] = useState([]); // Zakazani termini iz baze
+
     const [selectedDate, setSelectedDate] = useState(null);
     const [appointmentModal, setAppointmentModal] = useState(false);
     const [availableTimes, setAvailableTimes] = useState([]);
+
     // Paginacija
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 5 // Broj korisnika po stranici
@@ -93,7 +97,7 @@ const Dashboard = () => {
 
     // Paginacija
     const totalPages = Math.ceil(data.length / usersPerPage);
-    
+    const formattedDate = format(selectedDate, "dd.MM.yyyy", { locale: sr });
     const tileDisabled = ({ date, view }) => {
         if (view === 'month') {
           const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
@@ -117,7 +121,7 @@ const Dashboard = () => {
         const dayOfWeek = date.getDay();
         
         if (dayOfWeek >= 2 && dayOfWeek <= 6) {
-          setAppointmentModal(true);
+          setModalTermin(true);
           setAvailableTimes(generateAvailableTimes(date));
           
         }
@@ -132,8 +136,17 @@ const Dashboard = () => {
                 <p className='text-center text-3xl font-extrabold pt-4'>{data.length}</p>
             </div>
 
-            <div className="border-2 col-span-2 row-span-1 col-start-4 mt-4 shadow-xl bg-gray-100 rounded-lg">3
-                
+            <div className="border-2 col-span-2 row-span-1 col-start-4 mt-4 shadow-xl bg-gray-100 rounded-lg">
+                <div className='flex justify-center p-4'>
+                <Calendar
+                    onChange={handleDateChange}
+                    tileDisabled={tileDisabled}
+                    value={new Date()}
+                    className=""
+                    >
+                    
+                    </Calendar>
+                </div>
             </div>
             
             <div className='border-2 flex justify-center items-center col-span-4 row-span-4 col-start-2 row-start-2 rounded-lg bg-gray-100 shadow-lg m-4'>
@@ -257,6 +270,34 @@ const Dashboard = () => {
                     </div>
                 </form>
                 </div>
+            </Modal>
+
+            <Modal
+            isOpen={modalTermin}
+            onRequestClose={() => setModalTermin(false)}
+            ariaHideApp={false}
+            style={{
+                content: {
+                    top: '50%',
+                    left: '50%',
+                    right: 'auto',
+                    bottom: 'auto',
+                    marginRight: '-50%',
+                    transform: 'translate(-50%, -50%)',
+                },
+            }}
+            >
+           <p className="text-center text-2xl m-4">Termini za {formattedDate}</p>
+            <div className="grid grid-cols-5 gap-4">
+                {data.filter((termin) => termin.date === formattedDate).map((user, index)=>(
+                    <div key={index} className='p-2 bg-gray-200 rounded-lg'>
+                        <p className='text-center font-bold'>{user.time}</p>
+                        <p className='text-center font-normal'>{user.name} {user.surname}</p>
+                        
+                    </div>
+                ))}
+            </div>
+
             </Modal>
         </div>
     );
