@@ -11,6 +11,7 @@ import { sr } from 'date-fns/locale';
 
 const Dashboard = () => {
     const [modalTermin, setModalTermin] = useState(false);
+    const [terminsCount, setTerminsCount ] = useState({});
 
     const [fetchIdUser, setFetchIdUser] = useState();
     const [updateForm, setUpdateForm] = useState('');
@@ -86,6 +87,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         fetchData();
+        
     }, [data]);
     
     // Izračunaj korisnike za trenutnu stranicu
@@ -98,6 +100,7 @@ const Dashboard = () => {
     // Paginacija
     const totalPages = Math.ceil(data.length / usersPerPage);
     const formattedDate = format(selectedDate, "dd.MM.yyyy", { locale: sr });
+    
     const tileDisabled = ({ date, view }) => {
         if (view === 'month') {
           const dateStr = format(date, "dd.MM.yyyy", { locale: sr });
@@ -126,6 +129,23 @@ const Dashboard = () => {
           
         }
       };
+      const renderTileContent = ({ date, view }) => {
+
+        if (view === 'month') {
+          const dateString = format(date, "dd.MM.yyyy", { locale: sr });
+          
+          const count = data.filter((termin) => termin.date === dateString).length
+        
+          return count > 0 ? (
+            <div className="relative">
+              <span className="absolute -right-1 -bottom-2 bg-neutral-950 text-white text-xs rounded-full h-3.5 w-3.5 flex items-center justify-center">
+                    {count}
+                </span>
+            </div>
+          ) : null;
+        }
+      };
+      
     return (
         <div className='grid grid-cols-5 grid-rows-5 gap-4'>
             <div className="row-span-5 bg-gray-300 shadow-2xl h-screen">
@@ -139,13 +159,15 @@ const Dashboard = () => {
             <div className="border-2 col-span-2 row-span-1 col-start-4 mt-4 shadow-xl bg-gray-100 rounded-lg">
                 <div className='flex justify-center p-4'>
                 <Calendar
+                
                     onChange={handleDateChange}
-                    tileDisabled={tileDisabled}
+                    
                     value={new Date()}
-                    className=""
+                    tileContent={renderTileContent}
                     >
                     
                     </Calendar>
+                    <p className='text-xs rounded-full bg-neutral-950 text-white p-0.5'>{data.length}</p>
                 </div>
             </div>
             
@@ -240,7 +262,9 @@ const Dashboard = () => {
                         value={new Date()}
                         className=""
                         />
+                        
                     </div>
+                    
                 </div>
                 <form className='p-4 flex justify-center' onSubmit={submitUpdate}>
                     <div>
