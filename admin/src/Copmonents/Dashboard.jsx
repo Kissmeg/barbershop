@@ -167,7 +167,7 @@ const Dashboard = () => {
                     >
                     
                     </Calendar>
-                    <p className='text-xs rounded-full bg-neutral-950 text-white p-0.5'>{data.length}</p>
+                    
                 </div>
             </div>
             

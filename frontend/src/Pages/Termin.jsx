@@ -23,7 +23,7 @@ const Termin = () => {
   // Funkcija za povlačenje zakazanih termina iz baze
   const fetchScheduledAppointments = async () => {
     try {
-      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/appointments");
+      const response = await axios.get("http://localhost:8000/api/appointments");
       setScheduledAppointments(response.data); // Podesi zakazane termine iz baze podataka
     } catch (error) {
       toast.error("Greška prilikom povlačenja zakazanih termina.");
@@ -31,7 +31,7 @@ const Termin = () => {
   };
   const fetchEmails = async ()=> {
     try {
-      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/emails")
+      const response = await axios.get("http://localhost:8000/api/emails")
       setEmails(response.data)
     } catch (error) {
       toast.error("Greska prilikom povlacenja emailova.")
@@ -41,7 +41,7 @@ const Termin = () => {
   useEffect(() => {
     fetchEmails();
     fetchScheduledAppointments();
-  }, []);
+  }, [scheduledAppointments]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -76,7 +76,7 @@ const Termin = () => {
     }
   
     try {
-      await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
+      await axios.post("http://localhost:8000/api/create", {
         ...formData,
         date: formattedDate,
       });

@@ -121,7 +121,7 @@ const DodajKorisnika = () => {
       const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
       const allTimesTaken = takenTimes.length >= 20;
   
-      return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+      return date.getDay() === 0 || date.getDay() === 1 || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
     }
     return false;
   };
