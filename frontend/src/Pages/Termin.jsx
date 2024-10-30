@@ -41,7 +41,7 @@ const Termin = () => {
   useEffect(() => {
     fetchEmails();
     fetchScheduledAppointments();
-  }, [scheduledAppointments]);
+  }, [scheduledAppointments,emails]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
