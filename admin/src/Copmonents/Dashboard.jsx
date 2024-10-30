@@ -114,7 +114,7 @@ const Dashboard = () => {
           const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
           const allTimesTaken = takenTimes.length >= 20;
       
-          return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+          return date.getDay() === 0 || date.getDay() === 1 || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
         }
         return false;
       };
@@ -151,17 +151,17 @@ const Dashboard = () => {
             <div className="row-span-5 bg-gray-300 shadow-2xl h-screen">
                 <Sidemenu />
             </div>
-            <div className="border-2 col-span-2 row-span-1 mt-4 shadow-xl bg-gray-100 rounded-lg">
+            <div className="border-2 col-span-2 row-span-2 mt-4 shadow-xl bg-gray-100 rounded-lg">
                 <p className='text-center text-2xl font-bold'>Ukupno korisnika</p>
                 <p className='text-center text-3xl font-extrabold pt-4'>{data.length}</p>
             </div>
 
-            <div className="border-2 col-span-2 row-span-1 col-start-4 mt-4 shadow-xl bg-gray-100 rounded-lg">
+            <div className="border-2 col-span-2 row-span-2 col-start-4 mt-4 shadow-xl bg-gray-100 rounded-lg">
                 <div className='flex justify-center p-4'>
                 <Calendar
                 
                     onChange={handleDateChange}
-                    
+                    tileDisabled={tileDisabled}
                     value={new Date()}
                     tileContent={renderTileContent}
                     >
@@ -171,10 +171,10 @@ const Dashboard = () => {
                 </div>
             </div>
             
-            <div className='border-2 flex justify-center items-center col-span-4 row-span-4 col-start-2 row-start-2 rounded-lg bg-gray-100 shadow-lg m-4'>
+            <div className='border-2 flex justify-center items-center col-span-4 row-span-3 col-start-2 row-start-3 rounded-lg bg-gray-100 shadow-lg m-4'>
                 <div className=''>
                     <p className='text-4xl my-4'>Poslednjih 5 zakazanih termina</p>
-                    <table className='table-auto border-collapse border border-gray-300 w-full'>
+                    <table className='table-auto  border border-gray-300 w-full'>
                         <thead>
                             <tr className='bg-gray-300 text-left'>
                                 <th className='p-3 border-2 border-black'>ID</th>
@@ -198,8 +198,8 @@ const Dashboard = () => {
                                     <td className='p-3 border-t-[1px] border-2 border-black'>{user.phone}</td>
                                     <td className='p-3 border-t-[1px] border-2 border-black'>{user.date}</td>
                                     <td className='p-3 border-t-[1px] border-2 border-black'>{user.time}</td>
-                                    <td className='p-3 border-t-[1px] border-2 border-black '>
-                                        <button className='text-base ' onClick={() => deleteUser(user._id)}> Obrisi </button>
+                                    <td className='p-3 border-t-[1px] border-2 border-black bg-red-500 hover:bg-red-600 ease-in-out transition-all group'>
+                                        <button className='text-base' onClick={() => deleteUser(user._id)}> Obrisi </button>
                                     </td>
                                     <td className='p-3 border-2 bg-blue-400 border-black'>
 

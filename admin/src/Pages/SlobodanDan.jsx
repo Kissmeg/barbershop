@@ -34,7 +34,7 @@ const SlobodanDan = () => {
 
   const fetchScheduledAppointments = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/appointments");
+      const response = await axios.get("https://barbershop-backend-rex2.onrender.com/api/appointments");
       setScheduledAppointments(response.data);
     } catch (error) {
       
@@ -73,7 +73,7 @@ const SlobodanDan = () => {
     const formattedDate = format(selectedDate, "dd.MM.yyyy", { locale: sr });
     
     try {
-        const response = await axios.post("http://localhost:8000/api/createAppointment",{
+        const response = await axios.post("https://barbershop-backend-rex2.onrender.com/api/createAppointment",{
             name:"dejan",
             surname:"tolmac",
             phone:"0129412",

@@ -147,7 +147,7 @@ const Termin = () => {
   return (
     <div className="pt-40 mb-20">
       <ToastContainer /> 
-      <p className="text-center text-2xl lg:text-4xl p-4 m-4">Zakazivanje termina</p>
+      <p className="text-center text-2xl lg:text-3xl p-4 m-4 text-[#bc9935]">ZAKAZIVANJE TERMINA</p>
       
       {showForm &&(
     <div>
@@ -214,8 +214,10 @@ const Termin = () => {
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
+            
           },
         }}
+
       >
         <p className="text-center text-2xl m-4">Izaberite termin</p>
         <div className="grid grid-cols-5 gap-4">
@@ -229,7 +231,7 @@ const Termin = () => {
                 toast.info(`Izabrali ste termin u ${time} sati.`);
                 setModalIsOpen(false); // Zatvaranje modala odmah nakon izbora termina
               }}
-              className="block w-full p-2 rounded-md bg-gray-200 text-center hover:bg-gray-300"
+              className="block w-full p-2 rounded-md bg-gray-200 hover:bg-gray-300 text-center transition-all ease-in-out"
             >
               {time}
             </button>
