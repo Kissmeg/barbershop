@@ -70,6 +70,8 @@ const Termin = () => {
   
       if (hasAppointment) {
         toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
+        console.log(emailFound);
+        
         return;
       }
     } else {
@@ -81,13 +83,13 @@ const Termin = () => {
         ...formData,
         date: formattedDate,
       });
-      
+  
       toast.success(`Uspešno zakazan termin za ${formattedDate} u ${formData.time}!`);
-      setFormData({ name: "", surname: "", email: "", phone: "", time: "" });
+     
       setModalIsOpen(false);
       setSelectedDate(null);
       
-      
+  
       // Osvježavanje zakazanih termina i emailova
       fetchScheduledAppointments();
       fetchEmails(); // Dodato za osvežavanje email liste
@@ -150,8 +152,14 @@ const Termin = () => {
     <div className="pt-40 mb-20">
       <ToastContainer /> 
       <p className="text-center text-2xl lg:text-3xl p-4 m-4 text-[#bc9935]">ZAKAZIVANJE TERMINA</p>
+      
       {emails.map((test)=>(
-        <div>{test.email}</div>
+        <div>{test.email}{test.date}</div>
+        
+      ))}
+      {scheduledAppointments.map((test)=>(
+        <div>{test.date}</div>
+        
       ))}
       {showForm &&(
     <div>

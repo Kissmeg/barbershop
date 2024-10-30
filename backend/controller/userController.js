@@ -19,8 +19,6 @@ export const create = async(req, res)=>{
         
         
         if (requestedDate < today) {
-          
-            
           return res.status(400).json({ message: requestedDate + " " + "Ne možete zakazivati termine u prošlosti." });
         }
     
@@ -34,6 +32,7 @@ export const create = async(req, res)=>{
           // Provera da li je prošlo 7 dana od poslednjeg zakazanog termina
           const lastTerminDate = new Date(futureTermin.date);
           const sevenDaysAfterLastTermin = new Date(lastTerminDate.setDate(lastTerminDate.getDate() + 7));
+         
     
           if (requestedDate < sevenDaysAfterLastTermin) {
             return res.status(400).json({
