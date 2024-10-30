@@ -7,10 +7,11 @@ import format from 'date-fns/format';
 import { sr } from 'date-fns/locale'; 
 import { toast, ToastContainer } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useNavigate } from "react-router-dom";
 Modal.setAppElement('#root');
 
 const Termin = () => {
+  const navigate = useNavigate();
   const [emails, setEmails] = useState([]);
   const [showCalendar, setShowCalendar] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -41,7 +42,7 @@ const Termin = () => {
   useEffect(() => {
     fetchEmails();
     fetchScheduledAppointments();
-  }, [scheduledAppointments]);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -80,12 +81,13 @@ const Termin = () => {
         ...formData,
         date: formattedDate,
       });
-  
+      
       toast.success(`Uspešno zakazan termin za ${formattedDate} u ${formData.time}!`);
       setFormData({ name: "", surname: "", email: "", phone: "", time: "" });
       setModalIsOpen(false);
       setSelectedDate(null);
-  
+      
+      
       // Osvježavanje zakazanih termina i emailova
       fetchScheduledAppointments();
       fetchEmails(); // Dodato za osvežavanje email liste
@@ -148,7 +150,9 @@ const Termin = () => {
     <div className="pt-40 mb-20">
       <ToastContainer /> 
       <p className="text-center text-2xl lg:text-3xl p-4 m-4 text-[#bc9935]">ZAKAZIVANJE TERMINA</p>
-      
+      {emails.map((test)=>(
+        <div>{test.email}</div>
+      ))}
       {showForm &&(
     <div>
       <div className="lg:flex flex justify-center">
