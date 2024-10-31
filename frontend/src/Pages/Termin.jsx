@@ -60,22 +60,27 @@ const Termin = () => {
   
     // Proveri da li postoji email u bazi
     const emailFound = emails.some(emailObj => emailObj.email.trim() === formData.email.trim());
-  
-    if (emailFound) {
-      const hasAppointment = scheduledAppointments.some(appointment => {
-        const appointmentDate = new Date(appointment.date.split('.').reverse().join('-') + ' ' + appointment.time);
-        const diffInDays = Math.ceil((selectedDate - appointmentDate) / (1000 * 60 * 60 * 24));
-        return diffInDays >= 0 && diffInDays < 7;
-      });
-  
-      if (hasAppointment) {
-        toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
-        console.log(emailFound);
-        
-        return;
-      }
-    } else {
+
+if (emailFound) {
+  // Filtriraj zakazane termine samo za trenutni email
+  const userAppointments = scheduledAppointments.filter(appointment => appointment.email.trim() === formData.email.trim());
+
+  // Proveri da li postoji termin unutar 7 dana za trenutni email
+  const hasAppointment = userAppointments.some(appointment => {
+    const appointmentDate = new Date(appointment.date.split('.').reverse().join('-') + ' ' + appointment.time);
+    const diffInDays = Math.ceil((selectedDate - appointmentDate) / (1000 * 60 * 60 * 24));
+
+    return diffInDays >= 0 && diffInDays < 7;
+  });
+
+  if (hasAppointment) {
+    toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
+    return;
+  }
+}
+ else {
       console.log("No previous appointments found for this email.");
+      console.log(emailFound);
     }
   
     try {
@@ -141,7 +146,7 @@ const Termin = () => {
       const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
       const allTimesTaken = takenTimes.length >= 20;
   
-      return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+      return date.getDay() === 0 || date.getDay() === 1 || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
     }
     return false;
   };

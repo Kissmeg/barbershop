@@ -4,43 +4,6 @@ import jwt from "jsonwebtoken";
 export const create = async(req, res)=>{
     try {
       const { name, surname, email, phone, date, time } = req.body;
-
-      // Parsiranje datuma u DD.MM.YYYY formatu
-      const [day, month, year] = date.split(".");
-      const requestedDate = new Date(year, month - 1, day); // meseci su od 0 do 11
-      const today = new Date();
-      
-      // Formatiranje datuma u "dan, mesec, godina"
-      const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
-      const formattedDate = requestedDate.toLocaleDateString('sr-RS', options);
-      
-      console.log(formattedDate); // Ispisuje datum u formatu "dan, mesec, godina"
-      
-        
-        
-        if (requestedDate < today) {
-          return res.status(400).json({ message: requestedDate + " " + "Ne možete zakazivati termine u prošlosti." });
-        }
-    
-        // Provera da li korisnik već ima zakazan termin u budućnosti
-        const futureTermin = await User.findOne({
-          email: email,
-          date: { $gte: today } // Termin mora biti u budućnosti
-        });
-    
-        if (futureTermin) {
-          // Provera da li je prošlo 7 dana od poslednjeg zakazanog termina
-          const lastTerminDate = new Date(futureTermin.date);
-          const sevenDaysAfterLastTermin = new Date(lastTerminDate.setDate(lastTerminDate.getDate() + 7));
-         
-    
-          if (requestedDate < sevenDaysAfterLastTermin) {
-            return res.status(400).json({
-              message: `Već imate zakazan termin. Sledeći termin možete zakazati tek nakon ${sevenDaysAfterLastTermin.toLocaleDateString()}.`
-            });
-          }
-        }
-    
         // Kreiranje novog termina
         const newTermin = new User({ name, surname, email, phone, date, time });
         await newTermin.save();
@@ -68,7 +31,7 @@ export const createAppointment = async(req, res)=>{
 }
 export const fetchAppointments = async (req, res) => {
     try {
-      const appointments = await User.find({}, 'date time'); // Samo datum i vreme
+      const appointments = await User.find({}, 'date time email'); // Samo datum i vreme
       if (appointments.length === 0) {
         return res.status(404).json({ message: "Nema zakazanih termina." });
       }
