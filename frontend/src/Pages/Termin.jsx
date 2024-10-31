@@ -61,27 +61,31 @@ const Termin = () => {
     // Proveri da li postoji email u bazi
     const emailFound = emails.some(emailObj => emailObj.email.trim() === formData.email.trim());
 
-if (emailFound) {
-  // Filtriraj zakazane termine samo za trenutni email
-  const userAppointments = scheduledAppointments.filter(appointment => appointment.email.trim() === formData.email.trim());
-
-  // Proveri da li postoji termin unutar 7 dana za trenutni email
-  const hasAppointment = userAppointments.some(appointment => {
-    const appointmentDate = new Date(appointment.date.split('.').reverse().join('-') + ' ' + appointment.time);
-    const diffInDays = Math.ceil((selectedDate - appointmentDate) / (1000 * 60 * 60 * 24));
-
-    return diffInDays >= 0 && diffInDays < 7;
-  });
-
-  if (hasAppointment) {
-    toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
-    return;
-  }
-}
- else {
+    if (emailFound) {
+      const userAppointments = scheduledAppointments.filter(
+        appointment => appointment.email.trim() === formData.email.trim()
+      );
+    
+      const hasAppointment = userAppointments.some(appointment => {
+        const [day, month, year] = appointment.date.split('.').map(Number);
+        const appointmentDate = new Date(Date.UTC(year, month - 1, day)); // Siguran način kreiranja datuma
+    
+        const diffInDays = Math.ceil(
+          (selectedDate - appointmentDate) / (1000 * 60 * 60 * 24)
+        );
+    
+        return diffInDays >= 0 && diffInDays < 7;
+      });
+    
+      if (hasAppointment) {
+        toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
+        return;
+      }
+    } else {
       console.log("No previous appointments found for this email.");
       console.log(emailFound);
     }
+    
   
     try {
       await axios.post("https://barbershop-backend-rex2.onrender.com/api/create", {
