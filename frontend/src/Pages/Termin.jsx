@@ -93,7 +93,7 @@ if (emailFound) {
      
       setModalIsOpen(false);
       setSelectedDate(null);
-      
+      navigate('/') 
   
       // Osvježavanje zakazanih termina i emailova
       fetchScheduledAppointments();
