@@ -93,7 +93,7 @@ if (emailFound) {
      
       setModalIsOpen(false);
       setSelectedDate(null);
-      navigate('/') 
+     
   
       // Osvježavanje zakazanih termina i emailova
       fetchScheduledAppointments();
@@ -157,15 +157,6 @@ if (emailFound) {
     <div className="pt-40 mb-20">
       <ToastContainer /> 
       <p className="text-center text-2xl lg:text-3xl p-4 m-4 text-[#bc9935]">ZAKAZIVANJE TERMINA</p>
-      
-      {emails.map((test)=>(
-        <div>{test.email}{test.date}</div>
-        
-      ))}
-      {scheduledAppointments.map((test)=>(
-        <div>{test.date}</div>
-        
-      ))}
       {showForm &&(
     <div>
       <div className="lg:flex flex justify-center">
