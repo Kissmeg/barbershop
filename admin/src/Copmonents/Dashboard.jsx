@@ -177,7 +177,7 @@ const Dashboard = () => {
                     <table className='table-auto  border border-gray-300 w-full'>
                         <thead>
                             <tr className='bg-gray-300 text-left'>
-                                <th className='p-3 border-2 border-black'>ID</th>
+                                
                                 <th className='p-3 border-2 border-black'>Ime</th>
                                 <th className='p-3 border-2 border-black'>Prezime</th>
                                 <th className='p-3 border-2 border-black'>Email</th>
@@ -191,7 +191,7 @@ const Dashboard = () => {
                         <tbody className='bg-gray-300'>
                             {currentUsers.map((user, index)=> (
                                 <tr key={index} className='text-left hover:bg-neutral-400 transition-all ease-in-out'>
-                                    <td className='p-3 border-t-[1px] border-2 border-black'>{user._id}</td>
+                                    
                                     <td className='p-3 border-t-[1px] border-2 border-black'>{user.name}</td>
                                     <td className='p-3 border-t-[1px] border-2 border-black'>{user.surname}</td>
                                     <td className='p-3 border-t-[1px] border-2 border-black'>{user.email}</td>

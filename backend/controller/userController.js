@@ -4,6 +4,22 @@ import jwt from "jsonwebtoken";
 export const create = async(req, res)=>{
     try {
       const { name, surname, email, phone, date, time } = req.body;
+
+      const [day, month, year] = date.split(".");
+      const requestedDate = new Date(year, month - 1, day); // meseci su od 0 do 11
+      const today = new Date();
+      
+      // Formatiranje datuma u "dan, mesec, godina"
+      const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+      const formattedDate = requestedDate.toLocaleDateString('sr-RS', options);
+      
+      console.log(formattedDate); // Ispisuje datum u formatu "dan, mesec, godina"
+      
+        
+        
+        if (requestedDate < today) {
+         toast.error("Ne moze.")
+        }
         // Kreiranje novog termina
         const newTermin = new User({ name, surname, email, phone, date, time });
         await newTermin.save();

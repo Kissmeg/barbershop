@@ -6,6 +6,13 @@ import Termin from "./Pages/Termin"
 import About from "./Pages/About"
 import Footer from "./Components/Footer"
 
+import Sisanje from "./Pages/Sisanje"
+import Stucovanje from "./Pages/Stucovanje"
+import Brada from "./Pages/Brada"
+import Feniranje from "./Pages/Feniranje"
+import Fazoniranje from "./Pages/Fazoniranje"
+
+
 
 function App() {
   return (
@@ -16,6 +23,11 @@ function App() {
             <Route path={'/contact'} element={<Contact />}/>
             <Route path={'/termin'} element={<Termin />}/>
             <Route path={'/about'} element={<About />}/>
+            <Route path={'/sisanje'} element={<Sisanje />}/>
+            <Route path={'/stucovanje'} element={<Stucovanje />}/>
+            <Route path={'/brada'} element={<Brada />}/>
+            <Route path={'/feniranje'} element={<Feniranje />}/>
+            <Route path={'/fazoniranje'} element={<Fazoniranje />}/>
         </Routes>
       <Footer />
     </div>

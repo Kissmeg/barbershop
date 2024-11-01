@@ -21,6 +21,10 @@ const Sidemenu = () => {
                 <img className='w-6 m-2' src={assets.users_black} alt="" />
                 <Link to={'/SviTermini'}><p className='hover:translate-x-2 text-neutral-950 hover:text-neutral-600 transition-all ease-in-out'>Svi zakazani termini</p></Link>
             </div>
+            <div className='flex my-4'>
+                <img className='w-6 m-2' src={assets.users_black} alt="" />
+                <Link to={'http://localhost:5173'}><p className='hover:translate-x-2 text-neutral-950 hover:text-neutral-600 transition-all ease-in-out'>Povratak na sajt</p></Link>
+            </div>
         </div>
     </div>
   )

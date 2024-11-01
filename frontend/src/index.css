@@ -20,6 +20,10 @@
     border-color: #bc9355;
     
 }
+::selection{
+    color: black;
+    background-color: #bc9355;
+}
 @keyframes slide-left {
     0%{
         transform: translateX(-100%);

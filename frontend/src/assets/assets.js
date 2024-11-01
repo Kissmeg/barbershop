@@ -30,7 +30,8 @@ import barbershop from './barbershop.webp'
 import barberchair from './barberchair.webp'
 import exit from './exit.png'
 
-export const assets = { 
+export const assets = {
+    galeryRad1,
     facebook,
     exit,
     menu,

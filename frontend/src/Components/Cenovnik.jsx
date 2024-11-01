@@ -42,7 +42,18 @@ const Cenovnik = () => {
 
                   <div className='flex justify-between pt-4'>
                       <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
+                        <p className='text-xl font-semibold text-[#c29d66]'>Skinfade</p>
+                      </div>
+                      <div className='flex'>
+                        <p className='text-xl text-end text-white'>700</p>
+                        <p className='text-xs text-white py-2.5'>rsd</p>
+                      </div>
+                  </div>
+                  <hr className='border-dashed'/>
+
+                  <div className='flex justify-between pt-4'>
+                      <div>
+                        <p className='text-xl font-semibold text-[#c29d66]'>Deca</p>
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>500</p>
@@ -51,38 +62,17 @@ const Cenovnik = () => {
                   </div>
                   <hr className='border-dashed'/>
 
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
                   
           </div>
           <div className='m-4 group shadow-xl rounded-md p-4 lg:w-[20%] transition-all border-2 border-[#bc9355]'>
-                <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Šišanje</p>
+                <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Brada</p>
                 
                   <div className='flex justify-between pt-4'>
                       <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
+                        <p className='text-xl font-semibold text-[#c29d66]'>Brada oblikovanje</p>
                       </div>
                       <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
+                        <p className='text-xl text-end text-white'>300</p>
                         <p className='text-xs text-white py-2.5'>rsd</p>
                       </div>
                   </div>
@@ -90,43 +80,10 @@ const Cenovnik = () => {
                   
                   <div className='flex justify-between pt-4'>
                       <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Fade</p>
+                        <p className='text-xl font-semibold text-[#c29d66]'>Skidanje brade</p>
                       </div>
                       <div className='flex'>
-                        <p className='text-xl text-end text-white'>600</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
+                        <p className='text-xl text-end text-white'>100</p>
                         <p className='text-xs text-white py-2.5'>rsd</p>
                       </div>
                   </div>
@@ -134,62 +91,20 @@ const Cenovnik = () => {
                   
             </div>
             <div className='m-4 group shadow-xl rounded-md p-4 lg:w-[20%] transition-all border-2 border-[#bc9355]'>
-                <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Šišanje</p>
+                <p className='text-[#BC9355] text-3xl font-bold text-center pb-2'>Ostalo</p>
                 
                   <div className='flex justify-between pt-4'>
                       <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
+                        <p className='text-xl font-semibold text-[#c29d66]'>Pranje glave</p>
                       </div>
                       <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
+                        <p className='text-xl text-end text-white'>100</p>
                         <p className='text-xs text-white py-2.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
                   
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Fade</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>600</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
-
-                  <div className='flex justify-between pt-4'>
-                      <div>
-                        <p className='text-xl font-semibold text-[#c29d66]'>Klasično šišanje</p>
-                      </div>
-                      <div className='flex'>
-                        <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
-                      </div>
-                  </div>
-                  <hr className='border-dashed'/>
+                  
                   
             </div>
         </div>

@@ -27,7 +27,7 @@ const Hero = () => {
           <div className='text-center'>
           <hr className='m-4 border-neutral-500'/>
             <p className='text-base pb-2 font-light text-neutral-200'>KONTAKT</p>
-            <p className='text-2xl font-medium text-[#bc9355]'>+381 060 123 45 678</p>
+            <p className='text-2xl font-medium text-[#bc9355]'>+381 061 200 61 09</p>
             <p className='text-2xl font-medium text-[#bc9355]'>tolmac@gmail.com</p>
           </div>
         </div>
