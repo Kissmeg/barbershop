@@ -35,9 +35,9 @@ const Footer = () => {
                     <img src={assets.logo} alt="" className='w-1/3 rounded-lg'/>
                 </div>
                 <div className='flex justify-center gap-2'>
-                  <Link to={'https://www.instagram.com/barbershop.t0lmac/'}><FaInstagram className='text-2xl text-[#bc9355] w-8'></FaInstagram></Link>
-                  <Link to={'https://www.instagram.com/barbershop.t0lmac/'}><FaFacebook  className='text-2xl text-[#bc9355] w-8'></FaFacebook></Link>
-                  <Link to={'https://www.tiktok.com/@t0lmac?lang=en'}><FaTiktok    className='text-2xl text-[#bc9355] w-8'></FaTiktok></Link>
+                  <Link to={'https://www.instagram.com/barbershop.t0lmac/'}><FaInstagram className='text-2xl text-[#bc9355] w-8 hover:scale-110 transition-all ease-in-out'></FaInstagram></Link>
+                  <Link to={'https://www.instagram.com/barbershop.t0lmac/'}><FaFacebook  className='text-2xl text-[#bc9355] w-8 hover:scale-110 transition-all ease-in-out'></FaFacebook></Link>
+                  <Link to={'https://www.tiktok.com/@t0lmac?lang=en'}><FaTiktok    className='      text-2xl text-[#bc9355] w-8 hover:scale-110 transition-all ease-in-out'></FaTiktok></Link>
                 </div>
           </div>
         
@@ -45,7 +45,7 @@ const Footer = () => {
             <p className='text-2xl p-1'>Stranice</p>
             <Link to={'/'}><p className='p-1 text-neutral-400         hover:text-[#bc9355] hover:underline underline-offset-4 hover:translate-x-2  transition-all duration-200'>Početna</p></Link>
             <Link to={'/termin'}><p className='p-1 text-neutral-400   hover:text-[#bc9355] hover:underline underline-offset-4 hover:translate-x-2  transition-all duration-200'>Zakaži termin</p></Link>
-            <Link to={'/contact'}><p className='p-1 text-neutral-400  hover:text-[#bc9355] hover:underline underline-offset-4 hover:translate-x-2  transition-all duration-200'>Kontakt</p></Link>
+            
         </div>
         <div className='m-4 lg:w-[20%]'>
             <Link to={'/termin'}><p className='text-2xl p-1 text-[#bc9355] hover:translate-x-2 transition-all duration-200'>Zakaži termin</p></Link>
@@ -64,14 +64,15 @@ const Footer = () => {
         </div>
       </div>
       <div>
-        <hr />
+        <hr className='border-[#bc9355]'/>
         <div className='lg:flex text-center justify-center p-4'>
           <p className=''>Barbershop Tolmač - All Rights Reserved, 2024.</p>
           
         </div>
-        <p className='text-center'>Designed and Developed by </p>
-        <Link to={"https://www.linkedin.com/in/david-kish03/"}><p className='text-center p-4 text-[#bc9355] hover:underline underline-offset-2 transition-all ease-in-out'>David</p></Link>
-
+        <div className='p-4'>
+          <p className='text-center'>Designed & Developed - <Link className='text-[#bc9355] hover:underline transition-all ease-in-out underline-offset-2' to={'https://www.linkedin.com/in/david-kish03/'}>David</Link></p>
+        </div>
+        
       </div>
     </div>
   )

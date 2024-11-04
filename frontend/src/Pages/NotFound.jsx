@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const NotFound = () => {
-    {toast.error('errro')}
   return (
     <div>
       <div className='pt-40 text-center h-[60vh]'>

@@ -66,17 +66,26 @@ const Termin = () => {
         appointment => appointment.email.trim() === formData.email.trim()
       );
     
-      const hasAppointment = userAppointments.some(appointment => {
+        const hasAppointment = userAppointments.some(appointment => {
         const [day, month, year] = appointment.date.split('.').map(Number);
         const appointmentDate = new Date(Date.UTC(year, month - 1, day)); // Siguran način kreiranja datuma
-    
         const diffInDays = Math.ceil(
           (selectedDate - appointmentDate) / (1000 * 60 * 60 * 24)
         );
     
         return diffInDays >= 0 && diffInDays < 7;
       });
-    
+
+      const beforeAppointment = userAppointments.some(bAppointment =>{
+        const [day, month, year] = bAppointment.date.split('.').map(Number);
+        const appointmentDate = new Date(Date.UTC(year, month - 1, day));
+
+        return selectedDate < appointmentDate
+      })
+      if(beforeAppointment){
+        toast.error("Ne možete zakazati termin pre vašeg poslednjeg zakazanog termina.")
+        return
+      }
       if (hasAppointment) {
         toast.error("Možete zakazati novi termin tek nakon 7 dana od poslednjeg zakazivanja.");
         return;
@@ -253,7 +262,8 @@ const Termin = () => {
        <button onClick={() => setModalIsOpen(false)} className="mt-4 bg-red-500 text-white p-2 rounded-md">Zatvori</button>
        </div>
       </Modal>
-      <p className="text-center text-sm italic font-light m-4">Napomena: kada zakazete termin, sledeci termin ćete moći tek za nedelju dana da zakažete.</p>
+      <p className="text-center text-sm italic font-light m-4">Napomena: Kada zakažete termin, sledeći termin ćete moći tek za nedelju dana da zakažete.</p>
+      <p className="text-center text-sm italic font-light m-4">U slučaju potrebnog termina u roku od tih nedelju dana, pozvati na broj: +381 061 200 61 09</p>
     </div>
   );
 };
