@@ -35,7 +35,7 @@ const Navbar = () => {
           <Link to={'/'}> <img className='w-1/3' src={assets.logo} alt="logo"/></Link>
         </div>
         
-        <div className='hidden sm:flex gap-4 p-5 text-sm'>
+        <div className='hidden lg:flex gap-4 p-5 text-sm'>
           <NavLink to='/' className='transition-all relative flex flex-col items-center gap-1 group'>
             <p className=' text-zinc-200 hover:text-zinc-400'>POČETNA</p>
             <div className='w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-2/4 '></div>

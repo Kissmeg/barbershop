@@ -24,7 +24,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
@@ -35,7 +35,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>600</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
@@ -46,7 +46,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>700</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
@@ -57,7 +57,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>500</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
@@ -73,7 +73,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>300</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
@@ -84,7 +84,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>100</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>
@@ -99,7 +99,7 @@ const Cenovnik = () => {
                       </div>
                       <div className='flex'>
                         <p className='text-xl text-end text-white'>100</p>
-                        <p className='text-xs text-white py-2.5'>rsd</p>
+                        <p className='text-xs text-white py-2.5 px-0.5'>rsd</p>
                       </div>
                   </div>
                   <hr className='border-dashed'/>

@@ -11,6 +11,7 @@ import Stucovanje from "./Pages/Stucovanje"
 import Brada from "./Pages/Brada"
 import Feniranje from "./Pages/Feniranje"
 import Fazoniranje from "./Pages/Fazoniranje"
+import NotFound from "./Pages/NotFound"
 
 
 
@@ -28,6 +29,7 @@ function App() {
             <Route path={'/brada'} element={<Brada />}/>
             <Route path={'/feniranje'} element={<Feniranje />}/>
             <Route path={'/fazoniranje'} element={<Fazoniranje />}/>
+            <Route path={'*'} element={<NotFound />} />
         </Routes>
       <Footer />
     </div>

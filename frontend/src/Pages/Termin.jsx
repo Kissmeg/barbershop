@@ -150,7 +150,7 @@ const Termin = () => {
       const takenTimes = scheduledAppointments.filter(appointment => appointment.date === dateStr);
       const allTimesTaken = takenTimes.length >= 20;
   
-      return date.getDay() === 0 || date.getDay() === 1 || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
+      return date.getDay() === 0 || date.getDay() === 1 || date < new Date() || date > new Date(new Date().setDate(new Date().getDate() + 14)) || allTimesTaken || isOffDay;
     }
     return false;
   };
@@ -191,8 +191,8 @@ const Termin = () => {
                 </div>
               </div>
               <div className="flex justify-between">
-              <button className="p-2 mt-2 border-2 border-black" onClick={()=>{setShowForm(false); setShowCalendar(true) }}>Povratak</button>
-                <button className="flex bg-[#bc9935] text-white p-2 mt-2">Zakazi termin</button>
+              <button className="p-2 mt-2 border-2 border-black ease-in-out transition-all hover:scale-105" onClick={()=>{setShowForm(false); setShowCalendar(true) }}>Povratak</button>
+                <button className="flex bg-[#bc9935] text-white p-2 mt-2 ease-in-out transition-all hover:scale-105">Zakazi termin</button>
                 
               </div>
               

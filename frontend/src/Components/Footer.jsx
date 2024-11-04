@@ -1,10 +1,32 @@
 import React from 'react'
 import { assets } from '../assets/assets'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Link as ScrollLink } from 'react-scroll'
 import { FaInstagram, FaFacebook, FaTiktok } from 'react-icons/fa';
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleScrollLink = (target) => {
+    if (location.pathname !== '/') {
+      // Ako nismo na glavnoj stranici, navigiraj na početnu stranicu
+      navigate('/');
+      // Kada se navigacija izvrši, postavi mali timeout za skrolovanje
+      setTimeout(() => {
+        const element = document.getElementById(target);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100); // 100ms je dovoljno vreme da se komponenta učita
+    } else {
+      // Ako smo već na početnoj, skroluj direktno
+      const element = document.getElementById(target);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <div className='bg-neutral-900 text-neutral-200 px-20 pt-10'>
       <div className='lg:flex justify-evenly'>
@@ -27,9 +49,9 @@ const Footer = () => {
         </div>
         <div className='m-4 lg:w-[20%]'>
             <Link to={'/termin'}><p className='text-2xl p-1 text-[#bc9355] hover:translate-x-2 transition-all duration-200'>Zakaži termin</p></Link>
-            <ScrollLink to='usluge' smooth={true} duration={500} offset={-50} className='cursor-pointer' ><p className='p-1   text-neutral-400 hover:underline underline-offset-4 hover:text-[#bc9355] hover:translate-x-2 transition-all duration-200'>Usluge</p></ScrollLink>
-            <ScrollLink to='cenovnik' smooth={true} duration={500} offset={-50} className='cursor-pointer' ><p className='p-1 text-neutral-400 hover:underline underline-offset-4 hover:text-[#bc9355] hover:translate-x-2 transition-all duration-200' >Cenovnik</p></ScrollLink>
-            <ScrollLink to='rad' smooth={true} duration={500} offset={-50} className='cursor-pointer' ><p className='p-1      text-neutral-400 hover:underline underline-offset-4 hover:text-[#bc9355] hover:translate-x-2 transition-all duration-200' >Moj rad</p></ScrollLink>
+            <div  onClick={() => handleScrollLink('usluge')} className='cursor-pointer' ><p className='p-1   text-neutral-400 hover:underline underline-offset-4 hover:text-[#bc9355] hover:translate-x-2 transition-all duration-200'>Usluge</p></div>
+            <div  onClick={() => handleScrollLink('cenovnik')} className='cursor-pointer' ><p className='p-1 text-neutral-400 hover:underline underline-offset-4 hover:text-[#bc9355] hover:translate-x-2 transition-all duration-200' >Cenovnik</p></div>
+            <div  onClick={() => handleScrollLink('rad')} className='cursor-pointer' ><p className='p-1      text-neutral-400 hover:underline underline-offset-4 hover:text-[#bc9355] hover:translate-x-2 transition-all duration-200' >Moj rad</p></div>
   
         
         </div>
